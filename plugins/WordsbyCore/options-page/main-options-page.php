@@ -90,6 +90,22 @@ acf_add_local_field_group(array(
 			'placeholder' => '',
 		),
 		array(
+			'key' => 'field_5bbdb29d71140',
+			'label' => 'Preview Key',
+			'name' => 'preview_key',
+			'instructions' => '',
+			'type' => 'text',
+			'required' => 0,
+			'conditional_logic' => 0,
+			'wrapper' => array(
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'default_value' => '',
+			'placeholder' => '',
+		),
+		array(
 			'key' => 'field_5bbda2ed92b361',
 			'label' => 'ACF Options',
 			'name' => '',
