@@ -7,72 +7,70 @@ global $pagenow;
 if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) {
     add_action( 'admin_head', 'wpse_125800_custom_publish_box' );
     function wpse_125800_custom_publish_box() {
-        if (!is_admin()) return;
-			
-		if (get_field('build_site_url', 'option')) return;
+		if (!is_admin()) return;
+		
+		if(function_exists('get_field')){
+			if (get_field('build_site_url', 'option')) return;
 
-        $style = '';
-        $style .= '<style type="text/css">';
-        $style .= '#edit-slug-box, #minor-publishing-actions';
-        $style .= '{display: none; }';
-        $style .= '</style>';
+			$style = '';
+			$style .= '<style type="text/css">';
+			$style .= '#edit-slug-box, #minor-publishing-actions';
+			$style .= '{display: none; }';
+			$style .= '</style>';
 
-        echo $style;
+			echo $style;
+		}
     }
 }
 
-add_action('admin_notices', 'public_previews_reminder');
-function public_previews_reminder() {
-	global $develop_preview;
+function wordsby_get_template($id){
 
-	if ($develop_preview) jp_notices_add_error('Previews are public. disable DANGEROUS__WORDSBY_PUBLIC_PREVIEWS in wp-config.php');
+	$post_type = get_post_type($id);
 
-	return;
+	if($post_type == 'page'){
+
+		if(function_exists('get_field') && get_field('is_archive', $id)){
+			$archive_post_type = get_field('post_type', $id);
+			return "archive/$archive_post_type";
+		}
+
+		$template = get_post_meta($id, "_wp_page_template", true);
+
+		if($template == 'default'){
+			return 'index';
+		}
+
+		return $template;
+	}
+
+	return "single/$post_type";
+
 }
 
 function custom_preview_page_link($link) {
 	global $develop_preview;
 
-	$id = get_the_ID();
-	$user_id = get_current_user_id();
-	$nonce = wp_create_nonce( 'wp_rest' );
+	if(function_exists('get_field')){
+		$id = get_the_ID();
+		$user_id = get_current_user_id();
+		$nonce = get_field('preview_key', 'options');
 
-	$available_templates = get_option('templates-collections');
-	if (!$available_templates) return false;
-	$default_template = "index";
-	
-	$post_type = get_post_type($id);
-	$obj = get_post_type_object($post_type);
+		$available_templates = get_option('templates-collections');
+		if (!$available_templates) return false;
+		$default_template = "index";
+		
+		$post_type = get_post_type($id);
+		$obj = get_post_type_object($post_type);
 
-	$is_archive = get_field('is_archive', $id);
-	$archive_post_type = get_field('post_type', $id);
+		$rest_base = !empty($obj->rest_base) ? $obj->rest_base : $obj->name;
 
-	$assigned_template = get_post_meta($id, "_wp_page_template", true);
-	
-	if ($is_archive) {
-		$assigned_template = "archive/$archive_post_type";
-	} elseif ($assigned_template === "") {
-		$assigned_template = "single/$post_type";
-	}
+		$template = wordsby_get_template($id);
 
-	$rest_base = !empty($obj->rest_base) ? $obj->rest_base : $obj->name;
-	
-	if ($assigned_template === 'default' && !$is_archive) {
-		$desired_template = "single/$post_type";
-	} else {
-		$desired_template = $assigned_template;
-	}
-
-	if (array_key_exists($desired_template, $available_templates)) {
-		$available_template = $desired_template;
-	} else {
-		$available_template = $default_template;
-	}
-
-	if ($develop_preview) {
-		$link = "http://localhost:8000/preview/$available_template/?rest_base=$rest_base&preview=$id&nonce=$nonce&localhost=true";
-	} else {
-		$link = get_home_url() . "/preview/?available_template=" . urlencode($available_template) . "&rest_base=$rest_base&preview=$id&id=$id&nonce=$nonce";
+		if ($develop_preview) {
+			$link = "http://localhost:8000/preview/$template/?rest_base=$rest_base&preview=$id&nonce=$nonce&userId=$user_id&localhost=true";
+		} else {
+			$link = get_home_url() . "/preview/?available_template=" . urlencode($template) . "&rest_base=$rest_base&preview=$id&id=$id&nonce=$nonce&userId=$user_id";
+		}
 	}
 
 	return $link;
