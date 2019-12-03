@@ -24,11 +24,11 @@
 }
 
 /* Menu items */
-#adminmenu>li {
+#adminmenu > li {
   display: none;
 }
 
-#adminmenu>li.not-hidden {
+#adminmenu > li.not-hidden {
   display: block;
 }
 
@@ -50,11 +50,11 @@
   word-wrap: break-word;
 }
 
-.wp-submenu>li:hover .wp-subsubmenu {
+.wp-submenu > li:hover .wp-subsubmenu {
   display: block;
 }
 
-.wp-submenu>li {
+.wp-submenu > li {
   position: relative;
 }
 
@@ -66,19 +66,9 @@
 #wp-admin-bar-comments,
 #wp-admin-bar-wpseo-menu,
 #wp-admin-bar-wp-rest-api-cache-empty,
-#wpfooter,
-#contextual-help-link-wrap,
 #wp-admin-bar-archive,
-.post-attributes-label-wrapper,
-#poststuff .inside input[name="menu_order"],
-#poststuff .inside input[name="menu_order"]~p,
-#post-status-info,
 .yoast-seo-score.content-score,
 .yoast-seo-score.keyword-score,
-.misc-pub-revisions,
-.misc-pub-visibility,
-.mce-statusbar,
-#edit-slug-box strong,
 #wp-admin-bar-my-account img {
   display: none !important;
 }
@@ -88,7 +78,10 @@
   content: none;
 }
 
-#wpadminbar #wp-admin-bar-my-account.with-avatar #wp-admin-bar-user-actions>li {
+#wpadminbar
+  #wp-admin-bar-my-account.with-avatar
+  #wp-admin-bar-user-actions
+  > li {
   margin-left: 16px;
 }
 
@@ -124,7 +117,7 @@
   background: transparent !important;
 }
 
-#wp-admin-bar-build-status>.ab-item.ab-empty-item {
+#wp-admin-bar-build-status > .ab-item.ab-empty-item {
   display: flex;
   align-items: center;
 }
@@ -133,12 +126,12 @@
   width: 100px;
 }
 
-#wp-admin-bar-trigger-build>.ab-item.ab-empty-item {
+#wp-admin-bar-trigger-build > .ab-item.ab-empty-item {
   display: flex;
   justify-content: center;
 }
 
-#wp-admin-bar-trigger-build:hover>.ab-item.ab-empty-item {
+#wp-admin-bar-trigger-build:hover > .ab-item.ab-empty-item {
   cursor: pointer;
 }
 

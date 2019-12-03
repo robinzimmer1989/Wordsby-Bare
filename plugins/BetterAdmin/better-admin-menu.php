@@ -165,25 +165,29 @@ add_action( 'admin_bar_menu', 'make_parent_node', 0 );
 
 function make_parent_node( $wp_admin_bar ) {
 
-    if(get_field('netlify_deploy_status', 'option')){
-        $badge = '<img src="' . get_field('netlify_deploy_status', 'option') . '" />';
-    }else{
-        $badge = '';
-    }
+    if(function_exists('get_field')){
 
-    $args = array(
-        'id'     => 'build-status',
-        'title' => $badge,
-        'parent' => false,
-	);
-    $wp_admin_bar->add_node( $args );
+        if(get_field('netlify_deploy_status', 'option')){
+            $badge = '<img src="' . get_field('netlify_deploy_status', 'option') . '" />';
     
-	$args = array(
-        'id'     => 'trigger-build',
-        'title' => '<div class="build_webhook" data-value="' . get_field('build_webhook', 'option') . '">Trigger build</div>',
-        'parent' => false,
-	);
-    $wp_admin_bar->add_node( $args );
+            $args = array(
+                'id'     => 'build-status',
+                'title' => $badge,
+                'parent' => false,
+            );
+            $wp_admin_bar->add_node( $args );
+        }
+
+        if(get_field('build_webhook', 'option')){
+            $args = array(
+                'id'     => 'trigger-build',
+                'title' => '<div class="build_webhook" data-value="' . get_field('build_webhook', 'option') . '">Trigger build</div>',
+                'parent' => false,
+            );
+            $wp_admin_bar->add_node( $args );
+        }
+        
+    }
 }
 
 
