@@ -8,6 +8,11 @@ Check out the [Wordsby readme](https://github.com/TylerBarnes/wordsby) for more 
 
 ### 1.2.0
 
+- Fix admin css bugs
+- New preview functionality
+
+### 1.2.0
+
 - Add Gravity Form commit (Gitlab)
 
 ### 1.1.1
