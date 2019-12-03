@@ -6,7 +6,7 @@ Check out the [Wordsby readme](https://github.com/TylerBarnes/wordsby) for more 
 
 ## Changelog
 
-### 1.2.0
+### 1.3.0
 
 - Fix admin css bugs
 - New preview functionality
