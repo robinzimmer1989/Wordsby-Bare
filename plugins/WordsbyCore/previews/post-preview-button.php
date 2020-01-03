@@ -57,7 +57,6 @@ function custom_preview_page_link($link) {
 
 		$available_templates = get_option('templates-collections');
 		if (!$available_templates) return false;
-		$default_template = "index";
 		
 		$post_type = get_post_type($id);
 		$obj = get_post_type_object($post_type);
@@ -65,6 +64,10 @@ function custom_preview_page_link($link) {
 		$rest_base = !empty($obj->rest_base) ? $obj->rest_base : $obj->name;
 
 		$template = wordsby_get_template($id);
+
+		if(!$template){
+			$template = 'index';
+		}
 
 		if ($develop_preview) {
 			$link = "http://localhost:8000/preview/$template/?rest_base=$rest_base&preview=$id&nonce=$nonce&userId=$user_id&localhost=true";
